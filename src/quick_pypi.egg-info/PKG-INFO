@@ -1,3 +1,31 @@
+Metadata-Version: 2.1
+Name: quick-pypi
+Version: 0.0.1a0
+Summary: The simplest and quickest way to build and upload a PyPI package
+Home-page: https://github.com/dhchenx/quick-pypi
+Author: Donghua Chen
+Author-email: douglaschan@126.com
+License: MIT
+Project-URL: Bug Reports, https://github.com/dhchenx/quick-pypi/issues
+Project-URL: Source, https://github.com/dhchenx/quick-pypi
+Keywords: python package deployment,python library
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3 :: Only
+Requires-Python: >=3.6, <4
+Description-Content-Type: text/markdown
+Provides-Extra: dev
+Provides-Extra: test
+License-File: LICENSE
+
 # Quick-PyPI
 
 The simplest and quickest way to build and upload a PyPI package
@@ -26,10 +54,10 @@ PyCharm Project Root
    -- 0.0.2
    -- ...
    -- VERSION           # a file storing the latest version of uploading
- quick_pypi.py          # Main settings of uploading package
+ quick-pypi.py          # Main settings of uploading package
 ```
 
-Step 2: The simplest `quick_pypi.py` file content is below: 
+Step 2: The simplest `quick-pypi.py` file content is below: 
 ```python
 from quick_pypi.deploy import *
 auto_deploy(
@@ -76,4 +104,6 @@ Here you can provide more information about your package, like setting your auth
 
 ## License
 The `quick-pypi` project is provided by [Donghua Chen](https://github.com/dhchenx). 
+
+
 
