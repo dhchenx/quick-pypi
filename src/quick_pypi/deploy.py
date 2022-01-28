@@ -24,15 +24,19 @@ def deploy(src_root="src",
            license="MIT",
            license_filename="LICENSE",
            github_username="",
+           github_repo_name="",
            readme_path="",
            long_name="",
-           long_description=""
+           long_description="",
+           status='5 - Production/Stable'
            ):
 
     if long_description=="":
         long_description=description
     if long_name=="":
         long_name=name
+    if github_repo_name=="":
+        github_repo_name=name
 
     src = os.path.basename(src_root)
     if not os.path.exists(dist_root):
@@ -69,6 +73,8 @@ def deploy(src_root="src",
         if os.path.exists(license_path):
             # filename, file_extension = os.path.splitext(license_path)
             shutil.copyfile(license_path, f'{dist_root}/{license_filename}')
+        else:
+            print("Error: license path cannot be found: ",license_path)
     else:
         shutil.copyfile(license_path_mit, f'{dist_root}/{license_filename}')
 
@@ -109,13 +115,19 @@ def deploy(src_root="src",
         "requires":requires_list_str,
         "license":license,
         "license_filename":license_filename,
-        "github_username":github_username
+        "github_username":github_username,
+        "github_repo_name":github_repo_name,
+        "status":status
     }
 
-    if github_username=="" or project_url=="":
+    if project_url!="" and github_username=="":
+        setup_path = f'{current_path}/template/setup_with_only_project_url.py'
+        generate_file(setup_path, setup_model, f'{dist_root}/setup.py')
+    if github_username=="" and project_url=="":
         setup_path = f'{current_path}/template/setup_no_urls.py'
         generate_file(setup_path, setup_model, f'{dist_root}/setup.py')
     else:
+        setup_model["project_url"]=f"https://github.com/{github_username}/{github_repo_name}"
         generate_file(setup_path, setup_model, f'{dist_root}/setup.py')
 
     setup_cfg_model={

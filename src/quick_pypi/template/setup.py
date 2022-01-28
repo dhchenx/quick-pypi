@@ -87,7 +87,7 @@ setup(
         #   3 - Alpha
         #   4 - Beta
         #   5 - Production/Stable
-        'Development Status :: 5 - Production/Stable',
+        'Development Status :: {status}',
 
         # Indicate who your project is intended for
         'Intended Audience :: Developers',
@@ -201,8 +201,8 @@ setup(
     # what's used to render the link text on PyPI.
 
     project_urls={  # Optional
-        'Bug Reports': 'https://github.com/{github_username}/{name}/issues',
-        'Source': 'https://github.com/{github_username}/{name}',
+        'Bug Reports': 'https://github.com/{github_username}/{github_repo_name}/issues',
+        'Source': 'https://github.com/{github_username}/{github_repo_name}',
     },
 
 )

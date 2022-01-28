@@ -18,3 +18,4 @@ src/quick_pypi/template/README.md
 src/quick_pypi/template/setup.cfg
 src/quick_pypi/template/setup.py
 src/quick_pypi/template/setup_no_urls.py
+src/quick_pypi/template/setup_with_only_project_url.py
