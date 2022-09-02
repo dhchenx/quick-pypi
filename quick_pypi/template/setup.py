@@ -1,6 +1,6 @@
 """A setuptools based setup module.
 
-The simplest and quickest way to build a Pypi package and upload to Pypi Server
+{description}
 
 """
 
@@ -28,7 +28,7 @@ setup(
     # There are some restrictions on what makes a valid project name
     # specification here:
     # https://packaging.python.org/specifications/core-metadata/#name
-    name='quick-pypi',  # Required
+    name='{name}',  # Required
 
     # Versions should comply with PEP 440:
     # https://www.python.org/dev/peps/pep-0440/
@@ -36,12 +36,12 @@ setup(
     # For a discussion on single-sourcing the version across setup.py and the
     # project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.0.2',  # Required
+    version='{version}',  # Required
 
     # This is a one-line description or tagline of what your project does. This
     # corresponds to the "Summary" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#summary
-    description='The simplest and quickest way to build and upload a PyPI package',  # Optional
+    description='{description}',  # Optional
 
     # This is an optional longer description of your project that represents
     # the body of text which users will see when they visit PyPI.
@@ -69,15 +69,15 @@ setup(
     #
     # This field corresponds to the "Home-Page" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#home-page-optional
-     url='https://github.com/dhchenx/quick-pypi',  # Optional
+     url='{project_url}',  # Optional
 
     # This should be your name or the name of the organization which owns the
     # project.
-    author='Donghua Chen',  # Optional
+    author='{author_name}',  # Optional
 
     # This should be a valid email address corresponding to the author listed
     # above.
-    author_email='douglaschan@126.com',  # Optional
+    author_email='{author_email}',  # Optional
 
     # Classifiers help users find your project by categorizing it.
     #
@@ -87,11 +87,11 @@ setup(
         #   3 - Alpha
         #   4 - Beta
         #   5 - Production/Stable
-        'Development Status :: 5 - Production/Stable',
+        'Development Status :: {status}',
 
         # Indicate who your project is intended for
-        'Intended Audience :: Developers',
-        'Topic :: Software Development :: Build Tools',
+        'Intended Audience :: {intended_audience}',
+        'Topic :: {topic}',
 
         # Pick your license as you wish
         'License :: OSI Approved :: MIT License',
@@ -113,11 +113,11 @@ setup(
     # Note that this is a list of additional keywords, separated
     # by commas, to be used to assist searching for the distribution in a
     # larger catalog.
-    keywords="python package deployment, python library",  # Optional
+    keywords="{keywords}",  # Optional
 
     # When your source code is in a subdirectory under the project root, e.g.
     # `src/`, it is necessary to specify the `package_dir` argument.
-    package_dir={'': 'src'},  # Optional
+    package_dir={'': '{src}'},  # Optional
 
     # You can just specify package directories manually here if your project is
     # simple. Or you can use find_packages().
@@ -128,7 +128,7 @@ setup(
     #
     #   py_modules=["my_module"],
     #
-    packages=find_packages(where='src'),  # Required
+    packages=find_packages(where='{src}'),  # Required
 
     # Specify which Python versions you support. In contrast to the
     # 'Programming Language' classifiers above, 'pip install' will check this
@@ -136,7 +136,7 @@ setup(
     # https://packaging.python.org/guides/distributing-packages-using-setuptools/#python-requires
     python_requires='>=3.6, <4',
 
-    license="MIT",
+    license="{license}",
 
     # This field lists other packages that your project depends on to run.
     # Any package you put here will be installed by pip when your project is
@@ -145,7 +145,7 @@ setup(
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
-        "twine"
+        {requires}
     ],  # Optional
 
     # List additional groups of dependencies here (e.g. development
@@ -185,9 +185,9 @@ setup(
     # For example, the following would provide a command called `sample` which
     # executes the function `main` from this package when invoked:
     entry_points={  # Optional
-        #'console_scripts': [
-        #    'sample=sample:main',
-        #],
+        'console_scripts': [
+            '{console_scripts}',
+        ],
     },
 
     # List additional URLs that are relevant to your project as a dict.
@@ -201,9 +201,8 @@ setup(
     # what's used to render the link text on PyPI.
 
     project_urls={  # Optional
-        'Bug Reports': 'https://github.com/dhchenx/quick-pypi/issues',
-
-        'Source': 'https://github.com/dhchenx/quick-pypi',
+        'Bug Reports': 'https://github.com/{github_username}/{github_repo_name}/issues',
+        'Source': 'https://github.com/{github_username}/{github_repo_name}',
     },
 
 )
