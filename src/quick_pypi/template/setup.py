@@ -90,8 +90,8 @@ setup(
         'Development Status :: {status}',
 
         # Indicate who your project is intended for
-        'Intended Audience :: Developers',
-        'Topic :: Software Development :: Build Tools',
+        'Intended Audience :: {intended_audience}',
+        'Topic :: {topic}',
 
         # Pick your license as you wish
         'License :: OSI Approved :: MIT License',
@@ -185,9 +185,9 @@ setup(
     # For example, the following would provide a command called `sample` which
     # executes the function `main` from this package when invoked:
     entry_points={  # Optional
-        #'console_scripts': [
-        #    'sample=sample:main',
-        #],
+        'console_scripts': [
+            '{console_scripts}',
+        ],
     },
 
     # List additional URLs that are relevant to your project as a dict.

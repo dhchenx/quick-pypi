@@ -12,3 +12,5 @@ include setup.py
 # recursive-include examples *
 recursive-include {src} *
 # recursive-include images *
+
+{exclude}

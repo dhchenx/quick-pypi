@@ -10,6 +10,7 @@ def generate_file(src_path,dict_kv,target_path):
     text=open(src_path,'r',encoding='utf-8').read()
     for k in dict_kv:
         text=text.replace("{"+k+"}",dict_kv[k])
+
     f_out=open(target_path,'w',encoding='utf-8')
     f_out.write(text)
     f_out.close()
@@ -48,6 +49,7 @@ def deploy(src_root="src",
         github_repo_name=name
 
     src = os.path.basename(src_root)
+    print("src = ",src)
     if not os.path.exists(dist_root):
         os.mkdir(dist_root)
     else:
@@ -67,16 +69,13 @@ def deploy(src_root="src",
             return
 
     current_path = os.path.dirname(os.path.realpath(__file__))
+    print("current path: ",current_path)
+
     license_path_mit=f'{current_path}/template/LICENSE'
-    manifest_path=f'{current_path}/template/MANIFEST.in'
-    if readme_path=="":
-        readme_path=f'{current_path}/template/README.md'
-    else:
-        if not os.path.exists(readme_path):
-            print("README.md does not exist!")
-            return
-    setup_cfg_path=f'{current_path}/template/setup.cfg'
-    setup_path=f'{current_path}/template/setup.py'
+    
+
+    # setup_cfg_path=f'{current_path}/template/setup.cfg'
+    setup_path=f'{current_path}/template/pyproject.toml'
 
     if license_path!="":
         if os.path.exists(license_path):
@@ -86,6 +85,9 @@ def deploy(src_root="src",
             print("Error: license path cannot be found: ",license_path)
     else:
         shutil.copyfile(license_path_mit, f'{dist_root}/{license_filename}')
+    
+    '''
+    manifest_path=f'{current_path}/template/MANIFEST.in'
 
     manifest_model={
         "src":src,
@@ -95,6 +97,15 @@ def deploy(src_root="src",
 
     generate_file(manifest_path,manifest_model,f'{dist_root}/MANIFEST.in')
 
+    '''
+    # readme.md
+    if readme_path=="":
+        readme_path=f'{current_path}/template/README.md'
+    else:
+        if not os.path.exists(readme_path):
+            print("README.md does not exist!")
+            return
+    
     readme_model={
         "name":name,
         "long_name":long_name,
@@ -104,7 +115,7 @@ def deploy(src_root="src",
     }
 
     generate_file(readme_path, readme_model, f'{dist_root}/README.md')
-    #
+    # dependecies
     requires_list_str=""
 
     if requires.strip()=="":
@@ -113,6 +124,11 @@ def deploy(src_root="src",
         requires_list = [f'"{r}"' for r in requires.split(";")]
         requires_list_str=','.join(requires_list)
 
+    # TOML files
+    keyword_list=keywords.split(",")
+    keyword_list=["'"+k.strip()+"'" for k in keyword_list]
+    keywords_str=",".join(keyword_list)
+    
     setup_model={
         "name":name,
         "description":description,
@@ -120,7 +136,7 @@ def deploy(src_root="src",
         "project_url":project_url,
         "author_name":author_name,
         "author_email":author_email,
-        "keywords":keywords,
+        "keywords":keywords_str,
         "src":src,
         "requires":requires_list_str,
         "license":license,
@@ -134,20 +150,22 @@ def deploy(src_root="src",
     }
 
     if project_url!="" and github_username=="":
-        setup_path = f'{current_path}/template/setup_with_only_project_url.py'
-        generate_file(setup_path, setup_model, f'{dist_root}/setup.py')
+        setup_path = f'{current_path}/template/setup_with_only_project_url.toml'
+        generate_file(setup_path, setup_model, f'{dist_root}/pyproject.toml')
     if github_username=="" and project_url=="":
-        setup_path = f'{current_path}/template/setup_no_urls.py'
-        generate_file(setup_path, setup_model, f'{dist_root}/setup.py')
+        setup_path = f'{current_path}/template/setup_no_urls.toml'
+        generate_file(setup_path, setup_model, f'{dist_root}/pyproject.toml')
     else:
         setup_model["project_url"]=f"https://github.com/{github_username}/{github_repo_name}"
-        generate_file(setup_path, setup_model, f'{dist_root}/setup.py')
+        generate_file(setup_path, setup_model, f'{dist_root}/pyproject.toml')
 
+    '''
     setup_cfg_model={
         "license_filename":license_filename
     }
 
     generate_file(setup_cfg_path, setup_cfg_model, f'{dist_root}/setup.cfg')
+    '''
 
     # copy src folder
     if os.path.exists(src_root):
@@ -170,7 +188,6 @@ def get_next_version(version,max_number_micro=5,max_number_minor=5):
         micro+=1
         return f'{major}.{minor}.{micro}'
 
-
 def auto_deploy(name="quick-pypi-test",dists_root="dists", version="auto",cwd="", max_number_micro=20,max_number_minor=20, pypi_token="", test=False, only_build=False, **kwargs):
     if cwd!="":
         dists_root=os.path.join(cwd,dists_root)
@@ -190,18 +207,21 @@ def auto_deploy(name="quick-pypi-test",dists_root="dists", version="auto",cwd=""
     dist_root=f'{dists_root}/{version}'
     if os.path.exists(dist_root):
         print("WARNING: Version Exists! ",dist_root)
+
     deploy(name=name, version=version, dist_root=dist_root, **kwargs)
 
+    print("Finished building!")
     f_out=open(f"{dists_root}/VERSION","w",encoding='utf-8')
     f_out.write(version)
     f_out.close()
 
-    print("====================Building and Uploading================")
+    print("====================Uploading================")
     if not only_build:
         if test:
             upload_test_package(dist_root,token_path_or_str=pypi_token,cwd=cwd)
         else:
             upload_package(dist_root, token_path_or_str=pypi_token, cwd=cwd)
+        print("Finished uploading!")
     else:
         print("We only built the package, skip the uploading process!")
 
@@ -237,6 +257,7 @@ def upload_package(dist_root,token_path_or_str,cwd=""):
             token_str = open(token_path_or_str, 'r', encoding='utf-8').read().strip()
         else:
             token_str = token_path_or_str
+        print("start to Twine...")
         os.system(f"twine upload {dist_root}/dist/* -u {username} -p {token_str}")
 
 def upload_test_package(dist_root,token_path_or_str,cwd=""):
