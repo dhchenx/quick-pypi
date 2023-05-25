@@ -1,4 +1,4 @@
-twine
+quick-csv
 
 [dev]
 check-manifest

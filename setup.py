@@ -1,6 +1,6 @@
 """A setuptools based setup module.
 
-The simplest and quickest way to build a Pypi package and upload to Pypi Server
+The simplest and quickest way to build and deploy a PyPI package
 
 """
 
@@ -36,12 +36,12 @@ setup(
     # For a discussion on single-sourcing the version across setup.py and the
     # project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.0.2',  # Required
+    version='0.0.4',  # Required
 
     # This is a one-line description or tagline of what your project does. This
     # corresponds to the "Summary" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#summary
-    description='The simplest and quickest way to build and upload a PyPI package',  # Optional
+    description='The simplest and quickest way to build and publish a PyPI package',  # Optional
 
     # This is an optional longer description of your project that represents
     # the body of text which users will see when they visit PyPI.
@@ -202,7 +202,6 @@ setup(
 
     project_urls={  # Optional
         'Bug Reports': 'https://github.com/dhchenx/quick-pypi/issues',
-
         'Source': 'https://github.com/dhchenx/quick-pypi',
     },
 

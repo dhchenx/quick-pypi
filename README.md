@@ -1,6 +1,6 @@
 # Quick-PyPI
 
-The simplest and quickest way to build and upload a PyPI package
+The simplest and quickest way to build and publish a PyPI package
 
 ## Installation
 ```pip
@@ -12,11 +12,11 @@ pip install quick-pypi
 Before you start, you need to have several things:
 - Determine a unique PyPI package name, easy to remember, like 'quick-pypi-test';
 - Have a PyPI account, then export your upload token to a txt file in your computer;
-- Use PyCharm IDE to develop your own package. NOT notebook!
+- Use PyCharm IDE or VSCode to develop your own package. We support Jupyter Notebook now!
 
-Step 1: Prepare your PyCharm project tree like:
+Step 1: Prepare your project tree like:
 ```
-PyCharm Project Root
+Project Root
  -- src
    -- your_package_name
      -- __init__.py
@@ -33,7 +33,7 @@ Step 2: The simplest `quick_pypi.py` file content is below:
 ```python
 from quick_pypi.deploy import *
 auto_deploy(
-    cwd=os.path.dirname(os.path.realpath(__file__)), # current working directory, generally as project root
+    cwd=os.path.dirname(os.path.realpath(__file__)), # When using jupyter notebook, using `cwd=os.getcwd()`
     name="quick-pypi-test",
     description="This is a quick-pypi-test package!",
     pypi_token='../../pypi_upload_token.txt', # the token string or path from your PyPI account
@@ -52,6 +52,7 @@ A real example is here:
 
 ```python
 from quick_pypi.deploy import *
+# or you can use: `from quick_pypi.deploy_toml import *`
 
 auto_deploy(
     cwd=os.path.dirname(os.path.realpath(__file__)),
@@ -73,7 +74,8 @@ auto_deploy(
     keywords="refworks, csv file",
     github_username="dhchenx",
     max_number_micro=20, # major.minor.micro
-    max_number_minor=20 # version maximum numbers in each part, e.g. 0.0.20 --> 0.1.0; 0.20.20 --> 1.0.0
+    max_number_minor=20, # version maximum numbers in each part, e.g. 0.0.20 --> 0.1.0; 0.20.20 --> 1.0.0
+    # only_build=True
 )
 ```
 Here you can provide more information about your package, like setting your author's name, email, license, short or long names and descriptions, etc. 
@@ -95,6 +97,7 @@ qp.deploy(
     # requires="jieba;quick-crawler",
     # license='MIT',
     # license_filename='LICENSE'
+
 )
 ```
 This will generate a series of actual package files (e.g. README.md, LICENSE,setup.py, etc. ).
